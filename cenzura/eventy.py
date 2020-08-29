@@ -1,0 +1,197 @@
+import discord
+from discord.ext import commands
+import json
+
+class Eventy(commands.Cog):
+    def __init__(self, client):
+        self.bot = client
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if message.author.bot:
+            return
+          
+        with open("prefixes.json", "r") as f:
+            prefixes = json.load(f)
+
+        if str(message.guild.id) not in prefixes:
+            prefix = ";"
+        else:
+            prefix = prefixes[str(message.guild.id)]
+        
+        wulgaryzmy = ['CHUJ','CHUJA', 'CHUJEK', 'CHUJU', 'CHUJEM', 'CHUJNIA',
+'CHUJOWY', 'CHUJOWA', 'CHUJOWE', 'CIPA', 'CIPĘ', 'CIPE', 'CIPĄ',
+'CIPIE', 'DOJEBAĆ','DOJEBAC', 'DOJEBIE', 'DOJEBAŁ', 'DOJEBAL',
+'DOJEBAŁA', 'DOJEBALA', 'DOJEBAŁEM', 'DOJEBALEM', 'DOJEBAŁAM',
+'DOJEBALAM', 'DOJEBIĘ', 'DOJEBIE', 'DOPIEPRZAĆ', 'DOPIEPRZAC',
+'DOPIERDALAĆ', 'DOPIERDALAC', 'DOPIERDALA', 'DOPIERDALAŁ',
+'DOPIERDALAL', 'DOPIERDALAŁA', 'DOPIERDALALA', 'DOPIERDOLI',
+'DOPIERDOLIŁ', 'DOPIERDOLIL', 'DOPIERDOLĘ', 'DOPIERDOLE', 'DOPIERDOLI',
+'DOPIERDALAJĄCY', 'DOPIERDALAJACY', 'DOPIERDOLIĆ', 'DOPIERDOLIC',
+'DUPA', 'DUPIE', 'DUPĄ', 'DUPCIA', 'DUPECZKA', 'DUPY', 'DUPE', 'HUJ',
+'HUJEK', 'HUJNIA', 'HUJA', 'HUJE', 'HUJEM', 'HUJU', 'JEBAĆ', 'JEBAC',
+'JEBAŁ', 'JEBAL', 'JEBIE', 'JEBIĄ', 'JEBIA', 'JEBAK', 'JEBAKA', 'JEBAL',
+'JEBAŁ', 'JEBANY', 'JEBANE', 'JEBANKA', 'JEBANKO', 'JEBANKIEM',
+'JEBANYMI', 'JEBANA', 'JEBANYM', 'JEBANEJ', 'JEBANĄ', 'JEBANA',
+'JEBANI', 'JEBANYCH', 'JEBANYMI', 'JEBCIE', 'JEBIĄCY', 'JEBIACY',
+'JEBIĄCA', 'JEBIACA', 'JEBIĄCEGO', 'JEBIACEGO', 'JEBIĄCEJ', 'JEBIACEJ',
+'JEBIA', 'JEBIĄ', 'JEBIE', 'JEBIĘ', 'JEBLIWY', 'JEBNĄĆ', 'JEBNAC',
+'JEBNĄC', 'JEBNAĆ', 'JEBNĄŁ', 'JEBNAL', 'JEBNĄ', 'JEBNA', 'JEBNĘŁA',
+'JEBNELA', 'JEBNIE', 'JEBNIJ', 'JEBUT', 'KOORWA', 'KÓRWA', 'KURESTWO',
+'KUREW', 'KUREWSKI', 'KUREWSKA', 'KUREWSKIEJ', 'KUREWSKĄ', 'KUREWSKA',
+'KUREWSKO', 'KUREWSTWO', 'KURWA', 'KURWAA', 'KURWAMI', 'KURWĄ', 'KURWE',
+'KURWĘ', 'KURWIE', 'KURWISKA', 'KURWO', 'KURWY', 'KURWACH', 'KURWAMI',
+'KUREWSKI', 'KURWIARZ', 'KURWIĄCY', 'KURWICA', 'KURWIĆ', 'KURWIC',
+'KURWIDOŁEK', 'KURWIK', 'KURWIKI', 'KURWISZCZE', 'KURWISZON',
+'KURWISZONA', 'KURWISZONEM', 'KURWISZONY', 'KUTAS', 'KUTASA', 'KUTASIE',
+'KUTASEM', 'KUTASY', 'KUTASÓW', 'KUTASOW', 'KUTASACH', 'KUTASAMI',
+'MATKOJEBCA', 'MATKOJEBCY', 'MATKOJEBCĄ', 'MATKOJEBCA', 'MATKOJEBCAMI',
+'MATKOJEBCACH', 'NABARŁOŻYĆ', 'NAJEBAĆ', 'NAJEBAC', 'NAJEBAŁ',
+'NAJEBAL', 'NAJEBAŁA', 'NAJEBALA', 'NAJEBANE', 'NAJEBANY', 'NAJEBANĄ',
+'NAJEBANA', 'NAJEBIE', 'NAJEBIĄ', 'NAJEBIA', 'NAOPIERDALAĆ',
+'NAOPIERDALAC', 'NAOPIERDALAŁ', 'NAOPIERDALAL', 'NAOPIERDALAŁA',
+'NAOPIERDALALA', 'NAOPIERDALAŁA', 'NAPIERDALAĆ', 'NAPIERDALAC',
+'NAPIERDALAJĄCY', 'NAPIERDALAJACY', 'NAPIERDOLIĆ', 'NAPIERDOLIC',
+'NAWPIERDALAĆ', 'NAWPIERDALAC', 'NAWPIERDALAŁ', 'NAWPIERDALAL',
+'NAWPIERDALAŁA', 'NAWPIERDALALA', 'OBSRYWAĆ', 'OBSRYWAC', 'OBSRYWAJĄCY',
+'OBSRYWAJACY', 'ODPIEPRZAĆ', 'ODPIEPRZAC', 'ODPIEPRZY', 'ODPIEPRZYŁ',
+'ODPIEPRZYL', 'ODPIEPRZYŁA', 'ODPIEPRZYLA', 'ODPIERDALAĆ',
+'ODPIERDALAC', 'ODPIERDOL', 'ODPIERDOLIŁ', 'ODPIERDOLIL',
+'ODPIERDOLIŁA', 'ODPIERDOLILA', 'ODPIERDOLI', 'ODPIERDALAJĄCY',
+'ODPIERDALAJACY', 'ODPIERDALAJĄCA', 'ODPIERDALAJACA', 'ODPIERDOLIĆ',
+'ODPIERDOLIC', 'ODPIERDOLI', 'ODPIERDOLIŁ', 'OPIEPRZAJĄCY',
+'OPIERDALAĆ', 'OPIERDALAC', 'OPIERDALA', 'OPIERDALAJĄCY',
+'OPIERDALAJACY', 'OPIERDOL', 'OPIERDOLIĆ', 'OPIERDOLIC', 'OPIERDOLI',
+'OPIERDOLĄ', 'OPIERDOLA', 'PICZKA', 'PIEPRZNIĘTY', 'PIEPRZNIETY',
+'PIEPRZONY', 'PIERDEL', 'PIERDLU', 'PIERDOLĄ', 'PIERDOLA', 'PIERDOLĄCY',
+'PIERDOLACY', 'PIERDOLĄCA', 'PIERDOLACA', 'PIERDOL', 'PIERDOLE',
+'PIERDOLENIE', 'PIERDOLENIEM', 'PIERDOLENIU', 'PIERDOLĘ', 'PIERDOLEC',
+'PIERDOLA', 'PIERDOLĄ', 'PIERDOLIĆ', 'PIERDOLICIE', 'PIERDOLIC',
+'PIERDOLIŁ', 'PIERDOLIL', 'PIERDOLIŁA', 'PIERDOLILA', 'PIERDOLI',
+'PIERDOLNIĘTY', 'PIERDOLNIETY', 'PIERDOLISZ', 'PIERDOLNĄĆ',
+'PIERDOLNAC', 'PIERDOLNĄŁ', 'PIERDOLNAL', 'PIERDOLNĘŁA', 'PIERDOLNELA',
+'PIERDOLNIE', 'PIERDOLNIĘTY', 'PIERDOLNIJ', 'PIERDOLNIK', 'PIERDOLONA',
+'PIERDOLONE', 'PIERDOLONY', 'PIERDOŁKI', 'PIERDZĄCY', 'PIERDZIEĆ',
+'PIERDZIEC', 'PIZDA', 'PIZDĄ', 'PIZDE', 'PIZDĘ', 'PIŹDZIE', 'PIZDZIE',
+'PIZDNĄĆ', 'PIZDNAC', 'PIZDU', 'PODPIERDALAĆ', 'PODPIERDALAC',
+'PODPIERDALA', 'PODPIERDALAJĄCY', 'PODPIERDALAJACY', 'PODPIERDOLIĆ',
+'PODPIERDOLIC', 'PODPIERDOLI', 'POJEB', 'POJEBA', 'POJEBAMI',
+'POJEBANI', 'POJEBANEGO', 'POJEBANEMU', 'POJEBANI', 'POJEBANY',
+'POJEBANYCH', 'POJEBANYM', 'POJEBANYMI', 'POJEBEM', 'POJEBAĆ',
+'POJEBAC', 'POJEBALO', 'POPIERDALA', 'POPIERDALAC', 'POPIERDALAĆ',
+'POPIERDOLIĆ', 'POPIERDOLIC', 'POPIERDOLI', 'POPIERDOLONEGO',
+'POPIERDOLONEMU', 'POPIERDOLONYM', 'POPIERDOLONE', 'POPIERDOLENI',
+'POPIERDOLONY', 'POROZPIERDALAĆ', 'POROZPIERDALA', 'POROZPIERDALAC',
+'PORUCHAC', 'PORUCHAĆ', 'PRZEJEBAĆ', 'PRZEJEBANE', 'PRZEJEBAC',
+'PRZYJEBALI', 'PRZEPIERDALAĆ', 'PRZEPIERDALAC', 'PRZEPIERDALA',
+'PRZEPIERDALAJĄCY', 'PRZEPIERDALAJACY', 'PRZEPIERDALAJĄCA',
+'PRZEPIERDALAJACA', 'PRZEPIERDOLIĆ', 'PRZEPIERDOLIC', 'PRZYJEBAĆ',
+'PRZYJEBAC', 'PRZYJEBIE', 'PRZYJEBAŁA', 'PRZYJEBALA', 'PRZYJEBAŁ',
+'PRZYJEBAL', 'PRZYPIEPRZAĆ', 'PRZYPIEPRZAC', 'PRZYPIEPRZAJĄCY',
+'PRZYPIEPRZAJACY', 'PRZYPIEPRZAJĄCA', 'PRZYPIEPRZAJACA',
+'PRZYPIERDALAĆ', 'PRZYPIERDALAC', 'PRZYPIERDALA', 'PRZYPIERDOLI',
+'PRZYPIERDALAJĄCY', 'PRZYPIERDALAJACY', 'PRZYPIERDOLIĆ',
+'PRZYPIERDOLIC', 'QRWA', 'ROZJEBAĆ', 'ROZJEBAC', 'ROZJEBIE',
+'ROZJEBAŁA', 'ROZJEBIĄ', 'ROZPIERDALAĆ', 'ROZPIERDALAC', 'ROZPIERDALA',
+'ROZPIERDOLIĆ', 'ROZPIERDOLIC', 'ROZPIERDOLE', 'ROZPIERDOLI',
+'ROZPIERDUCHA', 'SKURWIĆ', 'SKURWIEL', 'SKURWIELA', 'SKURWIELEM',
+'SKURWIELU', 'SKURWYSYN', 'SKURWYSYNÓW', 'SKURWYSYNOW', 'SKURWYSYNA',
+'SKURWYSYNEM', 'SKURWYSYNU', 'SKURWYSYNY', 'SKURWYSYŃSKI',
+'SKURWYSYNSKI', 'SKURWYSYŃSTWO', 'SKURWYSYNSTWO', 'SPIEPRZAĆ',
+'SPIEPRZAC', 'SPIEPRZA', 'SPIEPRZAJ', 'SPIEPRZAJCIE', 'SPIEPRZAJĄ',
+'SPIEPRZAJA', 'SPIEPRZAJĄCY', 'SPIEPRZAJACY', 'SPIEPRZAJĄCA',
+'SPIEPRZAJACA', 'SPIERDALAĆ', 'SPIERDALAC', 'SPIERDALA', 'SPIERDALAŁ',
+'SPIERDALAŁA', 'SPIERDALAL', 'SPIERDALALCIE', 'SPIERDALALA',
+'SPIERDALAJĄCY', 'SPIERDALAJACY', 'SPIERDOLIĆ', 'SPIERDOLIC',
+'SPIERDOLI', 'SPIERDOLIŁA', 'SPIERDOLIŁO', 'SPIERDOLĄ', 'SPIERDOLA',
+'SRAĆ', 'SRAC', 'SRAJĄCY', 'SRAJACY', 'SRAJĄC', 'SRAJAC', 'SRAJ',
+'SUKINSYN', 'SUKINSYNY', 'SUKINSYNOM', 'SUKINSYNOWI', 'SUKINSYNÓW',
+'SUKINSYNOW', 'ŚMIERDZIEL', 'UDUPIĆ', 'UJEBAĆ', 'UJEBAC', 'UJEBAŁ',
+'UJEBAL', 'UJEBANA', 'UJEBANY', 'UJEBIE', 'UJEBAŁA', 'UJEBALA',
+'UPIERDALAĆ', 'UPIERDALAC', 'UPIERDALA', 'UPIERDOLI', 'UPIERDOLIĆ',
+'UPIERDOLIC', 'UPIERDOLI', 'UPIERDOLĄ', 'UPIERDOLA', 'UPIERDOLENI',
+'WJEBAĆ', 'WJEBAC', 'WJEBIE', 'WJEBIĄ', 'WJEBIA', 'WJEBIEMY',
+'WJEBIECIE', 'WKURWIAĆ', 'WKURWIAC', 'WKURWI', 'WKURWIA', 'WKURWIAŁ',
+'WKURWIAL', 'WKURWIAJĄCY', 'WKURWIAJACY', 'WKURWIAJĄCA', 'WKURWIAJACA',
+'WKURWIĆ', 'WKURWIC', 'WKURWI', 'WKURWIACIE', 'WKURWIAJĄ', 'WKURWIALI',
+'WKURWIĄ', 'WKURWIA', 'WKURWIMY', 'WKURWICIE', 'WKURWIACIE', 'WKURWIĆ',
+'WKURWIC', 'WKURWIA', 'WPIERDALAĆ', 'WPIERDALAC', 'WPIERDALAJĄCY',
+'WPIERDALAJACY', 'WPIERDOL', 'WPIERDOLIĆ', 'WPIERDOLIC', 'WPIZDU',
+'WYJEBAĆ', 'WYJEBAC', 'WYJEBALI', 'WYJEBAŁ', 'WYJEBAC', 'WYJEBAŁA',
+'WYJEBAŁY', 'WYJEBIE', 'WYJEBIĄ', 'WYJEBIA', 'WYJEBIESZ', 'WYJEBIE',
+'WYJEBIECIE', 'WYJEBIEMY', 'WYPIEPRZAĆ', 'WYPIEPRZAC', 'WYPIEPRZA',
+'WYPIEPRZAŁ', 'WYPIEPRZAL', 'WYPIEPRZAŁA', 'WYPIEPRZALA', 'WYPIEPRZY',
+'WYPIEPRZYŁA', 'WYPIEPRZYLA', 'WYPIEPRZYŁ', 'WYPIEPRZYL', 'WYPIERDAL',
+'WYPIERDALAĆ', 'WYPIERDALAC', 'WYPIERDALA', 'WYPIERDALAJ',
+'WYPIERDALAŁ', 'WYPIERDALAL', 'WYPIERDALAŁA', 'WYPIERDALALA',
+'WYPIERDALAĆ', 'WYPIERDOLIĆ', 'WYPIERDOLIC', 'WYPIERDOLI',
+'WYPIERDOLIMY', 'WYPIERDOLICIE', 'WYPIERDOLĄ', 'WYPIERDOLA',
+'WYPIERDOLILI', 'WYPIERDOLIŁ', 'WYPIERDOLIL', 'WYPIERDOLIŁA',
+'WYPIERDOLILA', 'ZAJEBAĆ', 'ZAJEBAC', 'ZAJEBIE', 'ZAJEBIĄ', 'ZAJEBIA',
+'ZAJEBIAŁ', 'ZAJEBIAL', 'ZAJEBAŁA', 'ZAJEBIALA', 'ZAJEBALI', 'ZAJEBANA',
+'ZAJEBANI', 'ZAJEBANE', 'ZAJEBANY', 'ZAJEBANYCH', 'ZAJEBANYM',
+'ZAJEBANYMI', 'ZAJEBISTE', 'ZAJEBISTY', 'ZAJEBISTYCH', 'ZAJEBISTA',
+'ZAJEBISTYM', 'ZAJEBISTYMI', 'ZAJEBIŚCIE', 'ZAJEBISCIE', 'ZAPIEPRZYĆ',
+'ZAPIEPRZYC', 'ZAPIEPRZY', 'ZAPIEPRZYŁ', 'ZAPIEPRZYL', 'ZAPIEPRZYŁA',
+'ZAPIEPRZYLA', 'ZAPIEPRZĄ', 'ZAPIEPRZA', 'ZAPIEPRZY', 'ZAPIEPRZYMY',
+'ZAPIEPRZYCIE', 'ZAPIEPRZYSZ', 'ZAPIERDALA', 'ZAPIERDALAĆ',
+'ZAPIERDALAC', 'ZAPIERDALAJA', 'ZAPIERDALAŁ', 'ZAPIERDALAJ',
+'ZAPIERDALAJCIE', 'ZAPIERDALAŁA', 'ZAPIERDALALA', 'ZAPIERDALALI',
+'ZAPIERDALAJĄCY', 'ZAPIERDALAJACY', 'ZAPIERDOLIĆ', 'ZAPIERDOLIC',
+'ZAPIERDOLI', 'ZAPIERDOLIŁ', 'ZAPIERDOLIL', 'ZAPIERDOLIŁA',
+'ZAPIERDOLILA', 'ZAPIERDOLĄ', 'ZAPIERDOLA', 'ZAPIERNICZAĆ',
+'ZAPIERNICZAJĄCY', 'ZASRAĆ', 'ZASRANYM', 'ZASRYWAĆ', 'ZASRYWAJĄCY',
+'ZESRYWAĆ', 'ZESRYWAJĄCY', 'ZJEBAĆ', 'ZJEBAC', 'ZJEBAŁ', 'ZJEBAL',
+'ZJEBAŁA', 'ZJEBALA', 'ZJEBANA', 'ZJEBIĄ', 'ZJEBALI', 'ZJEBY']
+
+        if message.content == f"<@!{self.bot.user.id}>" or message.content == f"<@{self.bot.user.id}>":
+            await message.channel.send(f"Prefix na tym serwerze to `{prefix}` a komenda do pomocy {prefix}pomoc")
+
+        for word in wulgaryzmy:
+            if word in message.content.upper():
+                with open("censor.json", "r") as f:
+                    c = json.load(f)
+
+                    if not str(message.guild.id) in c:
+                        censor = "on"
+                    else:
+                        censor = c[str(message.guild.id)]
+
+                if censor == "on" and not message.author.guild_permissions.manage_messages and not message.channel.is_nsfw():
+                    try:
+                        await message.delete()
+                        await message.channel.send("Przeklinanie na tym serwerze jest wyłączone " + message.author.name.replace("@", "@\u200b"))
+                    except:
+                        continue
+
+        if "discord.gg/" in message.content or "discord.com/invite/" in message.content or "discordapp.com/invite/" in message.content:
+            if not message.author.guild_permissions.manage_messages:
+                with open("antyinvites.json", "r") as f:
+                    ai = json.load(f)
+
+                    if str(message.guild.id) in ai:
+                        if ai[str(message.guild.id)]:
+                            try:
+                                await message.delete()
+                                await message.channel.send("Wysyłanie zaproszeń na tym serwerze jest wyłączone " + message.author.name.replace("@", "@\u200b"))
+                            except:
+                                return
+
+    @commands.Cog.listener()
+    async def on_member_join(self, member):
+        try:
+            with open("autorola.json", "r") as f:
+                a = json.load(f)
+
+                rola = a[str(member.guild.id)]
+
+            for role in member.guild.roles:
+                if role.id == rola:
+                    await member.add_roles(role)
+
+        except:
+            return
+            
+def setup(client):
+    client.add_cog(Eventy(client))
+    print("Załadowano eventy")

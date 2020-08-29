@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from dblista import DBLista
 import requests
+import config
 
 class Dblistatest(commands.Cog):
     def __init__(self, client):
@@ -11,7 +12,7 @@ class Dblistatest(commands.Cog):
     async def botinfo(self, ctx, bot: discord.User=None):
         bot = bot or self.bot.user
 
-        dbl = DBLista(self.bot, "ulUIyU2rzKo3i98S")
+        dbl = DBLista(self.bot, config.dblista)
         info = await dbl.bot_info(bot.id)
 
         e = discord.Embed(title=bot.name)
@@ -39,8 +40,7 @@ class Dblistatest(commands.Cog):
 
     @commands.command(description="Aktualizuje statystyki na DBLista", usage="updatestats")
     async def updatestats(self, ctx):
-        dbl = DBLista(self.bot, "ulUIyU2rzKo3i98S")
-        requests.post(f"https://top.gg/api/bots/{self.bot.user.id}/stats", headers={"authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcwNTU1Mjk1MjYwMDk1Mjk2MCIsImJvdCI6dHJ1ZSwiaWF0IjoxNTg5ODMzMzA3fQ.jkq-Ik_XFCPIKtSGGFaRxqzwOL3ROtQiQG3g58z4ico"}, json={"server_count":len(self.bot.guilds)})
+        dbl = DBLista(self.bot, config.dblista)
         update = await dbl.update_stats()
 
         await ctx.send(f"{update} | {len(self.bot.guilds)} guilds, {len(self.bot.users)} members")

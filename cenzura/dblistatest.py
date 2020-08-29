@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 from dblista import DBLista
-import requests
 import config
 
 class Dblistatest(commands.Cog):

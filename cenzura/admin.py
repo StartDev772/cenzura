@@ -246,7 +246,6 @@ class Administracja(commands.Cog):
             m = m.replace("<>", member.name)
             m = m.replace("[]", member.mention)
             m = m.replace("{}", str(len(member.guild.members)))
-            m = m.replace("@", "@\u200b")
             await member.guild.get_channel(c).send(m)
 
         except:
@@ -313,7 +312,6 @@ class Administracja(commands.Cog):
             m = m.replace("<>", member.name)
             m = m.replace("[]", member.mention)
             m = m.replace("{}", str(len(member.guild.members)))
-            m = m.replace("@", "@\u200b")
             await member.guild.get_channel(c).send(m)
 
         except:

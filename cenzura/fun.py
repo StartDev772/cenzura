@@ -13,6 +13,7 @@ import requests
 from PIL import Image
 from dblista import DBLista
 import functions
+import config
 
 class Fun(commands.Cog):
     def __init__(self, client):
@@ -261,7 +262,7 @@ class Fun(commands.Cog):
             e.set_footer(text="Uprawnienie administratora może edytować permisje do różnych ról (komenda perm)")
             return await ctx.send(embed=e)
       
-        cb = ac.Cleverbot('8rn\'("AHYg&UJ1NF4u)r')
+        cb = ac.Cleverbot(config.cleverbot)
         async with ctx.typing():
             response = await cb.ask(arg)
             await ctx.send(response.text)
@@ -276,7 +277,7 @@ class Fun(commands.Cog):
             
             if str(msg.guild.id) in cleverbot:
                 if msg.channel.id == cleverbot[str(msg.guild.id)]:
-                    cb = ac.Cleverbot('8rn\'("AHYg&UJ1NF4u)r')
+                    cb = ac.Cleverbot(config.cleverbot)
                     async with msg.channel.typing():
                         response = await cb.ask(msg.content)
                         await msg.channel.send(response.text)

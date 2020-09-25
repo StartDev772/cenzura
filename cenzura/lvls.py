@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import json
 import functions
+
 class Lvls(commands.Cog):
     def __init__(self, client):
         self.bot = client
